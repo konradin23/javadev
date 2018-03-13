@@ -24,9 +24,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         auth.jdbcAuthentication().dataSource(dataSource)
                 .usersByUsernameQuery(
-                        "select username,password, enabled from users where username=?")
+                        "select email,password, enabled from users where email=?")
                 .authoritiesByUsernameQuery(
-                        "select username, role from user_roles where username=?");
+                        "select email, role from user_roles where email=?");
     }
 
     @Override
@@ -35,10 +35,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests().mvcMatchers("/home/page").permitAll()
                 //Spring boot ogarnie sobie ścieżki do css itd sam, wystarczy zapisac to tak jak niżej
-                .antMatchers("/css/**", "/js/**", "/fonts/**").permitAll()
+                .antMatchers("/css/**", "/js/**", "/img/**", "/fonts/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().defaultSuccessUrl("/home/page")
+                .formLogin().loginPage("/home/mylogin").permitAll().defaultSuccessUrl("/home/page")
                 .and()
                 .httpBasic();
     }

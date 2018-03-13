@@ -15,10 +15,16 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping(path = "/home")
 public class MainController {
 
+	@RequestMapping(value = "/mylogin", method = RequestMethod.GET)
+	public String loginPage(Model model) {
+//		model.addAttribute("user", request.getRemoteUser());
+		return "loginpage";
+	}
+
 	@RequestMapping(value = "/page", method = RequestMethod.GET)
 	public String page(Model model, HttpServletRequest request) {
-		model.addAttribute("user", request.getRemoteUser());
-		return "loginpage";
+	model.addAttribute("user", request.getRemoteUser());
+		return "page";
 	}
 
 //	@Autowired

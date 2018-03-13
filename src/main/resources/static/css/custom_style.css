@@ -1,0 +1,105 @@
+@charset "UTF-8";
+
+#container {
+    margin-left: auto;
+    margin-right: auto;
+    width: 800px;
+    padding: 30px;
+}
+
+#add_container {
+    background-color: #e6ebec;
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+    border-style: solid;
+    border-width: 1px;
+    padding: 25px; margin-top : 100px;
+    -webkit-box-shadow: 5px 5px 15px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 5px 5px 15px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 5px 5px 15px 0px rgba(0, 0, 0, 0.75);
+    margin-top: 100px;
+}
+
+input[type=text] {
+    background-color: #eeeeee;
+    width: 280px;
+    border: 1px solid;
+    border-radius: 3px;
+    height: 24px;
+    margin: 10px;
+    font-size: 18px;
+}
+
+.add_button {
+    width: 280px;
+    background-color: #59983b;
+    border-type: none;
+    border-radius: 5px;
+    color: white;
+    height: 40px;
+    margin:0px 10px 10px 10px;
+}
+
+#delete_button{
+    width: 60px;
+    background-color: #983b59;
+    border-type: none;
+    border-radius: 5px;
+    color: white;
+    height: 22px;
+
+}
+
+#edit_button{
+    width: 60px;
+    background-color: #3b5998;
+    border-type: none;
+    border-radius: 5px;
+    color: white;
+    height: 22px;
+
+}
+
+h4 {
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+#table {
+    margin-left: auto;
+    margin-right: auto;
+    border-style: solid;
+    border-width: 1px;
+}
+
+#add_new {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#button_div {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#form {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#login_container {
+    background-color: whitesmoke;
+    margin-left: auto;
+    margin-right: auto;
+    width: 500px;
+    border-style: solid;
+    border-width: 1px;
+    padding: 25px;
+    margin-top: 20px;
+    -webkit-box-shadow: 5px 5px 15px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 5px 5px 15px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 5px 5px 15px 0px rgba(0, 0, 0, 0.75);
+
+}

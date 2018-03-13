@@ -12,7 +12,7 @@ public class AppConfiguration {
     @Bean
     public DataSource dataSource() {
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
-        dataSourceBuilder.url("jdbc:mysql://localhost:3306/db_example");
+        dataSourceBuilder.url("jdbc:mysql://localhost:3306/javadev_db");
         dataSourceBuilder.username("root");
         dataSourceBuilder.password("password");
         return dataSourceBuilder.build();
