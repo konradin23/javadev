@@ -18,7 +18,7 @@ public class MainController {
 	@RequestMapping(value = "/page", method = RequestMethod.GET)
 	public String page(Model model, HttpServletRequest request) {
 		model.addAttribute("user", request.getRemoteUser());
-		return "page";
+		return "loginpage";
 	}
 
 //	@Autowired
