@@ -1,5 +1,7 @@
 package com.example.javadev.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
@@ -14,12 +16,19 @@ public class Lecture {
 
     private String lecture_topic;
     private String lecture_place;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date lecture_date;
 
     @ManyToMany(mappedBy = "lectures")
     private Set<User> users = new HashSet<>();
 
     public Lecture(){};
+
+    public Lecture(String lecture_topic, String lecture_place, Date lecture_date) {
+        this.lecture_topic = lecture_topic;
+        this.lecture_place = lecture_place;
+        this.lecture_date = lecture_date;
+    }
 
     public int getLecture_id() {
         return lecture_id;
