@@ -27,6 +27,12 @@ public class MainController {
 		return "page";
 	}
 
+	@RequestMapping(value = "/addlectures", method = RequestMethod.GET)
+	public String addLectures(Model model, HttpServletRequest request) {
+		model.addAttribute("user", request.getRemoteUser());
+		return "add_lectures";
+	}
+
 //	@Autowired
 //	private UserRepository userRepository;
 //
