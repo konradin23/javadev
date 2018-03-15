@@ -1,7 +1,9 @@
 package com.example.javadev.controllers;
 
 import com.example.javadev.model.Lecture;
+import com.example.javadev.model.User;
 import com.example.javadev.repository.LectureRepository;
+import com.example.javadev.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,9 @@ public class MainController {
 
     @Autowired
     private LectureRepository lectureRepository;
+    @Autowired
+    private UserRepository userRepository;
+
 
     @RequestMapping(value = "/mylogin", method = RequestMethod.GET)
     public String loginPage(Model model) {
@@ -41,11 +46,32 @@ public class MainController {
     }
 
     @RequestMapping(value = "/addlectures", method = RequestMethod.POST)
-    public ModelAndView addLecture(
+    public ModelAndView createLecture(
             @RequestParam("lecture_topic") String lecture_topic,
             @RequestParam("lecture_place") String lecture_place,
-            @RequestParam("lecture_date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date lecture_date ) {
+            @RequestParam("lecture_date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date lecture_date) {
         lectureRepository.save(new Lecture(lecture_topic, lecture_place, lecture_date));
+        return new ModelAndView("redirect:/home/page");
+    }
+
+    @RequestMapping(value = "/mylectures", method = RequestMethod.GET)
+    public String myLectures(Model model, HttpServletRequest request) {
+        model.addAttribute("lectures", lectureRepository.findAll());
+        model.addAttribute("user", request.getRemoteUser());
+        return "my_lectures";}
+
+    @RequestMapping(value = "/mylectures", method = RequestMethod.POST)
+    public ModelAndView lectureAttended(@RequestParam("user_email") String user_email,
+                                 @RequestParam("lecture_id") int lecture_id) {
+
+        User user = userRepository.findOne(user_email);
+        Lecture lecture = lectureRepository.findOne(lecture_id);
+
+        user.getLectures().add(lecture);
+        lecture.getUsers().add(user);
+
+        userRepository.save(user);
+        //TODO
         return new ModelAndView("redirect:/home/page");
     }
 
@@ -93,4 +119,4 @@ public class MainController {
 //		userRepository.save(user);
 //		return new ModelAndView("redirect:/demo/all");
 //	}
-}
+    }

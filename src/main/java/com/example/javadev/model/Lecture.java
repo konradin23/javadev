@@ -19,7 +19,7 @@ public class Lecture {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date lecture_date;
 
-    @ManyToMany(mappedBy = "lectures")
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "lectures")
     private Set<User> users = new HashSet<>();
 
     public Lecture(){};
