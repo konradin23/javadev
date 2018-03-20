@@ -15,9 +15,9 @@ public class User {
 
     private String password;
 
-    private String name;
+    private String firstname;
 
-    private String surname;
+    private String lastname;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "users_lecture",
@@ -41,8 +41,8 @@ public class User {
     public User(String email, String password, String name, String surname) {
         this.email = email;
         this.password = password;
-        this.name = name;
-        this.surname = surname;
+        this.firstname = name;
+        this.lastname = surname;
     }
 
     public String getEmail() {
@@ -62,19 +62,19 @@ public class User {
     }
 
     public String getName() {
-        return name;
+        return firstname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String firstname) {
+        this.firstname = firstname;
     }
 
     public String getSurname() {
-        return surname;
+        return lastname;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setSurname(String lastname) {
+        this.lastname = lastname;
     }
 
     public Set<Lecture> getLectures() {

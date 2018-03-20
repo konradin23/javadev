@@ -35,7 +35,7 @@
     <p class="bg-secondary text-center font-bold">Twoja obecność na zajęciach</p>
 
 
-    <table class="table table-hover" >
+    <table class="table table-hover">
         <thead>
         <tr>
             <th>Imie i nazwisko</th>
@@ -46,11 +46,13 @@
         </thead>
 
         <tbody>
-        <tr data-th-each="user : ${users}">
-            <td data-th-text="${user.surname}">#</td>
+        <tr th:each="element : ${attendancelist}">
+            <td th:text="${element.key}">keyvalue</td>
+
+            <th:block th:each="was : ${element.value}">
+                <th th:text="${was}">Header Field</th>
+            </th:block>
         </tr>
-
-
         </tbody>
     </table>
 </div>

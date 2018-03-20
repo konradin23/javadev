@@ -3,18 +3,20 @@ package com.example.javadev.controllers;
 import com.example.javadev.model.Lecture;
 import com.example.javadev.model.User;
 import com.example.javadev.repository.LectureRepository;
+import com.example.javadev.service.Service;
+import com.example.javadev.service.ServiceImpl;
 import com.example.javadev.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 import java.util.Date;
 
 @Controller
@@ -25,6 +27,8 @@ public class MainController {
     private LectureRepository lectureRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private Service service;
 
 
     @RequestMapping(value = "/mylogin", method = RequestMethod.GET)
@@ -58,9 +62,11 @@ public class MainController {
     public String myLectures(Model model, HttpServletRequest request) {
         model.addAttribute("lectures", lectureRepository.findAll());
         model.addAttribute("user", request.getRemoteUser());
-        return "my_lectures";}
+        return "my_lectures";
+    }
 
-    @RequestMapping(value = "/mylectures", method = RequestMethod.POST)
+    @RequestMapping(value = "/lectureattended", method = RequestMethod.POST)
+    @Transactional
     public ModelAndView lectureAttended(@RequestParam("user_email") String user_email,
                                  @RequestParam("lecture_id") int lecture_id) {
 
@@ -71,9 +77,18 @@ public class MainController {
         lecture.getUsers().add(user);
 
         userRepository.save(user);
-        //TODO
-        return new ModelAndView("redirect:/home/page");
+
+        return new ModelAndView("redirect:/home/mylectures");
     }
+
+    @RequestMapping(value = "/attendancelist", method = RequestMethod.GET)
+    public String attendanceList(Model model, HttpServletRequest request) {
+        model.addAttribute("lectures", lectureRepository.findAll());
+        model.addAttribute("users", userRepository.findAll());
+        model.addAttribute("user", request.getRemoteUser());
+        model.addAttribute("attendancelist", service.createAttendanceList());
+        return "attendance_list";}
+
 
 //	@Autowired
 //	private UserRepository userRepository;
