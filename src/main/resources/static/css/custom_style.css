@@ -1,11 +1,12 @@
 @charset "UTF-8";
+@import url('https://fonts.googleapis.com/css?family=Lato:400,900&subset=latin-ext');
 
 #container {
-     margin-left: auto;
-     margin-right: auto;
-     width: 800px;
-     padding: 30px;
- }
+    margin-left: auto;
+    margin-right: auto;
+    width: 1000px;
+    font-family: 'Lato', sans-serif;
+}
 
 #form {
     margin-left: auto;
@@ -21,7 +22,8 @@
     width: 300px;
     border-style: solid;
     border-width: 1px;
-    padding: 25px; margin-top : 100px;
+    padding: 25px;
+    margin-top: 100px;
     -webkit-box-shadow: 5px 5px 15px 0px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 5px 5px 15px 0px rgba(0, 0, 0, 0.75);
     box-shadow: 5px 5px 15px 0px rgba(0, 0, 0, 0.75);
@@ -45,10 +47,10 @@ input[type=text] {
     border-radius: 5px;
     color: white;
     height: 40px;
-    margin:0px 10px 10px 10px;
+    margin: 0px 10px 10px 10px;
 }
 
-#delete_button{
+#delete_button {
     width: 60px;
     background-color: #983b59;
     border-type: none;
@@ -58,7 +60,7 @@ input[type=text] {
 
 }
 
-#edit_button{
+#edit_button {
     width: 60px;
     background-color: #3b5998;
     border-type: none;
@@ -113,4 +115,47 @@ h4 {
 
 .font-bold {
     font-weight: bold;
+}
+
+.table-img-center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.navbar-logo-text {
+    padding-top: 0.3125rem;
+    padding-bottom: 0.3125rem;
+    padding-left: 0.3125rem;
+}
+
+#myInput {
+    width: 600px;
+    margin-left: 200px;
+    margin-right: 200px;
+}
+
+#search {
+    background-color: #eeeeee;
+    width: 1000px;
+    padding: 10px;
+}
+
+#myTable{
+    width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.nav-border-bottom{
+    border-bottom: #eeeeee;
+    border-bottom-style: solid;
+    border-bottom-width: 4px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    background-color: #fff;
+}
+
+.form-control {
+    font-family: "FontAwesome"
 }

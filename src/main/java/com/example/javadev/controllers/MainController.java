@@ -32,8 +32,7 @@ public class MainController {
 
 
     @RequestMapping(value = "/mylogin", method = RequestMethod.GET)
-    public String loginPage(Model model) {
-//		model.addAttribute("user", request.getRemoteUser());
+    public String getLoginPage(Model model) {
         return "loginpage";
     }
 
@@ -44,7 +43,7 @@ public class MainController {
     }
 
     @RequestMapping(value = "/addlectures", method = RequestMethod.GET)
-    public String addLectures(Model model, HttpServletRequest request) {
+    public String getAddLectures(Model model, HttpServletRequest request) {
         model.addAttribute("user", request.getRemoteUser());
         return "add_lectures";
     }
@@ -59,7 +58,7 @@ public class MainController {
     }
 
     @RequestMapping(value = "/mylectures", method = RequestMethod.GET)
-    public String myLectures(Model model, HttpServletRequest request) {
+    public String getMyLectures(Model model, HttpServletRequest request) {
         model.addAttribute("lectures", lectureRepository.findAll());
         model.addAttribute("user", request.getRemoteUser());
         return "my_lectures";
@@ -68,7 +67,7 @@ public class MainController {
     @RequestMapping(value = "/lectureattended", method = RequestMethod.POST)
     @Transactional
     public ModelAndView lectureAttended(@RequestParam("user_email") String user_email,
-                                 @RequestParam("lecture_id") int lecture_id) {
+                                        @RequestParam("lecture_id") int lecture_id) {
 
         User user = userRepository.findOne(user_email);
         Lecture lecture = lectureRepository.findOne(lecture_id);
@@ -82,56 +81,20 @@ public class MainController {
     }
 
     @RequestMapping(value = "/attendancelist", method = RequestMethod.GET)
-    public String attendanceList(Model model, HttpServletRequest request) {
+    public String getAttendanceList(Model model, HttpServletRequest request) {
         model.addAttribute("lectures", lectureRepository.findAll());
-        model.addAttribute("users", userRepository.findAll());
         model.addAttribute("user", request.getRemoteUser());
         model.addAttribute("attendancelist", service.createAttendanceList());
-        return "attendance_list";}
+        //model.addAttribute("numberoflecturesattended", service.createAttendanceList());
 
-
-//	@Autowired
-//	private UserRepository userRepository;
-//
-//	@RequestMapping(value = "/create", method = RequestMethod.GET)
-//	public String helloForm() {
-//		return "form";
-//	}
-//
-//	@RequestMapping(path = "/all", method = RequestMethod.GET)
-//	public String getAllUsers(Model model, HttpServletRequest request) {
-//		model.addAttribute("users", userRepository.findAll());
-//		model.addAttribute("user", request.getRemoteUser());
-//		return "userslist";
-//	}
-//
-//	@RequestMapping(path = "/delete", method = RequestMethod.POST)
-//	public ModelAndView deleteUser(@RequestParam("user_id") long id) {//nazwa w RequestParam ma być taka sama jak w html form name
-//		userRepository.delete(id);
-//		return new ModelAndView("redirect:/demo/all");
-//	}
-//
-//	@RequestMapping(value = "/create", method = RequestMethod.POST)
-//	public ModelAndView createUser(@RequestParam("name") String name, @RequestParam("email") String email) {
-//		userRepository.save(new User(name, email));
-//		return new ModelAndView("redirect:/demo/all");
-//	}
-//
-//	@RequestMapping(value="/edit/{id}", method= RequestMethod.GET)
-//	public String editPage(@PathVariable long id, Model model) {
-//		User user=userRepository.findOne(id);
-//		model.addAttribute("user", user);
-//		return "edituser";
-//	}
-//
-//	@RequestMapping(value = "/update", method = RequestMethod.POST)
-//	public ModelAndView editUser(@RequestParam("user_id") long id,
-//                                 @RequestParam("name") String name,
-//                                 @RequestParam("email") String email) {
-//		User user = userRepository.findOne(id);
-//		user.setName(name);
-//		user.setEmail(email);
-//		userRepository.save(user);
-//		return new ModelAndView("redirect:/demo/all");
-//	}
+        return "attendance_list";
     }
+
+    @RequestMapping(value = "/studentslist", method = RequestMethod.GET)
+    public String getStudentsList(Model model, HttpServletRequest request) {
+        model.addAttribute("students", service.createStudentsList());
+        model.addAttribute("user", request.getRemoteUser());
+        model.addAttribute("numberOfStudents", service.getNumberOfStudents());
+        return "students_list";
+    }
+}

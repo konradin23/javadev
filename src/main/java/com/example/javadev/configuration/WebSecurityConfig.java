@@ -34,7 +34,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests().mvcMatchers("/home/page").permitAll()
-                //Spring boot ogarnie sobie ścieżki do css itd sam, wystarczy zapisac to tak jak niżej
                 .antMatchers("/css/**", "/js/**", "/img/**", "/fonts/**").permitAll()
                 .anyRequest().authenticated()
                 .and()

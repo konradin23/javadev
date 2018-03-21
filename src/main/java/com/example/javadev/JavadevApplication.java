@@ -51,26 +51,14 @@ public class JavadevApplication implements CommandLineRunner {
     @Override
     public void run(String... args) {
 
-//        Map<String, ArrayList<String>> attendanceList = new HashMap<>();
+//        TreeMap<String, String> studentsList = new TreeMap<>();
 //
-//        List<String> listOfStudentEmails = userRepository.findOnlyStudentEmails();
-//        List<Integer> listOfLecturesId = lectureRepository.getAllLecturesId();
-//
-//        for (String student : listOfStudentEmails) {
-//            //za kazdym razem robie nową liste, bo póżniej Map prawdopodobnie? potrzebuje cały czas referencje do tej listy
-//            ArrayList<Integer> innerList = new ArrayList<>();
-//            ArrayList<String> listOfAttendance = new ArrayList<>();
-//            listOfAttendance.clear();
-//            innerList.clear();
-//
-//            innerList.addAll(lectureRepository.findAllAttendedLecturesByStudent(student));
-//            for (int lectureId:listOfLecturesId) {
-//                if(innerList.contains(lectureId))
-//                    listOfAttendance.add("Był");
-//                else
-//                    listOfAttendance.add("Nie był");
-//            }
-//            attendanceList.put(student, listOfAttendance);
+//        List<String> listOfStudentsEmails = userRepository.findOnlyStudentEmails();
+//        List<String> listOfStudentNames = new ArrayList<>();
+//        for (String email : listOfStudentsEmails) {
+//            String name = userRepository.findStudentsNameByEmail(email);
+//            listOfStudentNames.add(name);
+//            studentsList.put(email, name);
 //        }
     }
 }

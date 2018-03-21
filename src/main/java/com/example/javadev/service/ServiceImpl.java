@@ -17,9 +17,9 @@ public class ServiceImpl implements com.example.javadev.service.Service {
     LectureRepository lectureRepository;
 
     @Override
-    public Map<String, ArrayList<String>> createAttendanceList() {
+    public TreeMap<String, ArrayList<String>> createAttendanceList() {
 
-        Map<String, ArrayList<String>> attendanceList = new HashMap<>();
+        TreeMap<String, ArrayList<String>> attendanceList = new TreeMap<>();
 
         List<String> listOfStudentEmails = userRepository.findOnlyStudentEmails();
         List<Integer> listOfLecturesId = lectureRepository.getAllLecturesId();
@@ -32,17 +32,35 @@ public class ServiceImpl implements com.example.javadev.service.Service {
             innerList.clear();
 
             innerList.addAll(lectureRepository.findAllAttendedLecturesByStudent(student));
-            for (int lectureId:listOfLecturesId) {
-                if(innerList.contains(lectureId))
-                    listOfAttendance.add("Był");
+            for (int lectureId : listOfLecturesId) {
+                if (innerList.contains(lectureId))
+                    listOfAttendance.add("/img/check.png");
                 else
-                    listOfAttendance.add("Nie był");
+                    listOfAttendance.add("/img/error.png");
             }
             attendanceList.put(student, listOfAttendance);
         }
         return attendanceList;
     }
 
+    @Override
+    public TreeMap<String, String> createStudentsList() {
+
+        TreeMap<String, String> studentsList = new TreeMap<>();
+
+        List<String> listOfStudentsEmails = userRepository.findOnlyStudentEmails();
+        List<String> listOfStudentNames = new ArrayList<>();
+        for (String email : listOfStudentsEmails) {
+            String name = userRepository.findStudentsNameByEmail(email);
+            listOfStudentNames.add(name);
+            studentsList.put(email, name);
+        }
+        return studentsList;
+    }
+
+    public int getNumberOfStudents(){
+        return userRepository.findOnlyStudentEmails().size();
+    }
 }
 
 

@@ -3,6 +3,7 @@
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script th:src="@{/js/bootstrap.js}"></script>
+    <script th:src="@{/js/search-in-table.js}"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/custom_style.css}"/>
     <meta charset="UTF-8"/>
@@ -29,34 +30,34 @@
         </div>
     </nav>
 
-    <h3 class="text-center">Zajęcia JavaDev<br/>
+    <h4 class="text-center">Zajęcia JavaDev<br/>
         <small>Wybierz z list zajęcia, w których brałeś udział.</small>
-    </h3>
+    </h4>
     <p class="bg-secondary text-center font-bold">Twoja obecność na zajęciach</p>
 
 
-<table class="table table-hover">
-    <tr>
-        <th>ID</th>
-        <th>Temat</th>
-        <th>Miejsce</th>
-        <th>Byłem</th>
-        <th>Nie byłem</th>
-    </tr>
-    <tr data-th-each="lecture : ${lectures}">
-        <td data-th-text="${lecture.lecture_id}">#</td>
-        <td data-th-text="${lecture.lecture_topic}">Imię</td>
-        <td data-th-text="${lecture.lecture_place}">Email</td>
-        <td><form method="post" action="/home/lectureattended">
+    <table class="table table-hover">
+        <tr>
+            <th>ID</th>
+            <th>Temat</th>
+            <th>Byłem</th>
+            <th>Nie byłem</th>
+        </tr>
+        <tr data-th-each="lecture, iterStat : ${lectures}">
+            <td><span class="font-bold" th:text="'Zajęcia '+${iterStat.count}+' '"></span><p th:text="${#dates.format(lecture.lecture_date, 'dd.MM.yyyy')}"></p></td>
+            <td><span class="font-bold" th:text="${lecture.lecture_topic}"></span><p th:text="${lecture.lecture_place}"></p></td>
+            <td>
+                <form method="post" action="/home/lectureattended">
 
-            <input type="hidden" id="user_email" name="user_email" th:value="${user}"/>
-            <input type="hidden" id="lecture_id" name="lecture_id" th:value="${lecture.lecture_id}"/>
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-            <button type="submit" id="lecture_attended">Byłem</button>
-        </form></td>
-        <td></td>
-    </tr>
-</table>
+                    <input type="hidden" id="user_email" name="user_email" th:value="${user}"/>
+                    <input type="hidden" id="lecture_id" name="lecture_id" th:value="${lecture.lecture_id}"/>
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                    <button type="submit" id="lecture_attended">Byłem</button>
+                </form>
+            </td>
+            <td></td>
+        </tr>
+    </table>
 </div>
 
 
