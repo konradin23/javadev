@@ -13,8 +13,8 @@ import java.util.concurrent.Future;
 @Repository
 public interface LectureRepository extends JpaRepository<Lecture, Integer> {
 
-    @Query(nativeQuery = true, value="SELECT s.lecture_id FROM users_lecture s WHERE s.email = :email")
-    List<Integer> findAllAttendedLecturesByStudent(@Param("email") String email);
+    @Query(nativeQuery = true, value="SELECT s.lecture_id FROM user_lecture s WHERE s.user_id = :user_id")
+    List<Integer> findAllLectureIdsAttendedByStudent(@Param("user_id") int userId);
 
     @Query(nativeQuery = true, value="SELECT s.lecture_id FROM lecture s")
     List<Integer> getAllLecturesId();

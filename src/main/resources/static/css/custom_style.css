@@ -113,8 +113,11 @@ h4 {
 
 }
 
-.font-bold {
+.font-weight-bold {
     font-weight: bold;
+}
+.font-weight-normal{
+    font-weight: normal;
 }
 
 .table-img-center {
@@ -124,8 +127,6 @@ h4 {
 }
 
 .navbar-logo-text {
-    padding-top: 0.3125rem;
-    padding-bottom: 0.3125rem;
     padding-left: 0.3125rem;
 }
 
@@ -158,4 +159,19 @@ h4 {
 
 .form-control {
     font-family: "FontAwesome"
+}
+
+.bg-eee{
+    background-color: #eee;
+}
+
+#my-lectures-table{
+    overflow-y: scroll;
+    max-height:400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.text-size-12{
+    font-size: 12px;
 }

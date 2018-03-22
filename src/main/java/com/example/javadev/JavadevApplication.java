@@ -17,6 +17,7 @@ import org.thymeleaf.templateresolver.FileTemplateResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
 import javax.transaction.Transactional;
+import java.lang.reflect.Array;
 import java.util.*;
 
 @SpringBootApplication
@@ -26,10 +27,10 @@ public class JavadevApplication implements CommandLineRunner {
     private ThymeleafProperties properties;
 
     @Autowired
-    private UserRepository userRepository;
+    UserRepository userRepository;
 
     @Autowired
-    private LectureRepository lectureRepository;
+    LectureRepository lectureRepository;
 
     @Value("${spring.thymeleaf.templates_root:}")
     private String templatesRoot;
@@ -51,13 +52,15 @@ public class JavadevApplication implements CommandLineRunner {
     @Override
     public void run(String... args) {
 
+
 //        TreeMap<String, String> studentsList = new TreeMap<>();
 //
-//        List<String> listOfStudentsEmails = userRepository.findOnlyStudentEmails();
-//        List<String> listOfStudentNames = new ArrayList<>();
-//        for (String email : listOfStudentsEmails) {
-//            String name = userRepository.findStudentsNameByEmail(email);
-//            listOfStudentNames.add(name);
+//        List<Integer> listOfStudentsIds = userRepository.findOnlyStudentIds();
+//
+//        for (int UserId : listOfStudentsIds) {
+//            User user = userRepository.findUserByUserId(UserId);
+//            String name = user.getFirstName() + " " + user.getLastName();
+//            String email = user.getEmail();
 //            studentsList.put(email, name);
 //        }
     }

@@ -11,8 +11,8 @@
 </head>
 <body>
 <div id="container">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#"><img th:src="@{/img/javadevlogo.png}" width="36" height="50" alt="logo"/>
+    <nav class="navbar navbar-expand-lg navbar-light nav-border-bottom">
+        <a class="navbar-brand" href="#"><img th:src="@{/img/javadevlogo.png}" width="32" height="50" alt="logo"/>
             <span class="font-bold navbar-logo-text"> Java</span>Dev</a>
         <div class="collapse navbar-collapse justify-content-md-end" id="navbarNavDropdown">
             <ul class="navbar-nav">
@@ -23,10 +23,10 @@
                     <a class="nav-link" href="addlectures">Dodaj zajęcia</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Zajęcia</a>
+                    <a class="nav-link" href="mylectures">Zajęcia</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Studenci</a>
+                    <a class="nav-link" href="studentslist">Studenci</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
@@ -43,7 +43,7 @@
 
 
     <br/>
-    <h3 class="text-center">Lista obecności<br/><br/>
+    <h3 class="text-center">Lista obecności<br/>
     </h3>
 
     <div id="search">
@@ -52,22 +52,22 @@
     <br/>
 
 
-    <table id="myTable" class="table table-hover ">
+    <table id="myTable" class="table table-hover text-size-12 ">
         <thead>
         <tr>
-            <th>Imie i nazwisko</th>
+            <th class="font-weight-normal">Imie i nazwisko</th>
             <th:block th:each="lecture : ${lectures}">
-                <th th:text="${#dates.format(lecture.lecture_date, 'dd.MM.yyyy')}">Data</th>
+                <th class="font-weight-normal" th:text="${#dates.format(lecture.lecture_date, 'dd.MM.yyyy')}">Data</th>
             </th:block>
         </tr>
         </thead>
 
         <tbody>
-        <tr th:each="element : ${attendancelist}">
-            <td th:text="${element.key}">Mail</td>
+        <tr th:each="element, iterStat : ${attendancelist}">
+            <td th:text="${iterStat.count}+'.'+${element.key}">Imie i nazwisko</td>
 
             <th:block th:each="was : ${element.value}">
-                <th><img th:src="${was}" width="30" height="30" class="table-img-center"/></th>
+                <th><img th:src="${was}" width="25" height="25" class="table-img-center"/></th>
             </th:block>
         </tr>
         </tbody>

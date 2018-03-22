@@ -8,58 +8,68 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Table(name = "lecture")
 public class Lecture {
 
     @Id
+    @Column(name = "lecture_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int lecture_id;
+    private int lectureId;
 
-    private String lecture_topic;
-    private String lecture_place;
+    @Column(name = "lecture_topic")
+    private String lectureTopic;
+
+    @Column(name = "lecture_place")
+    private String lecturePlace;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date lecture_date;
+    @Column(name = "lecture_date")
+    private Date lectureDate;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "lectures")
     private Set<User> users = new HashSet<>();
 
-    public Lecture(){};
-
-    public Lecture(String lecture_topic, String lecture_place, Date lecture_date) {
-        this.lecture_topic = lecture_topic;
-        this.lecture_place = lecture_place;
-        this.lecture_date = lecture_date;
+    public Lecture() {
     }
 
-    public int getLecture_id() {
-        return lecture_id;
+    ;
+
+    public Lecture(String lectureTopic, String lecturePlace, Date lectureDate) {
+        this.lectureTopic = lectureTopic;
+        this.lecturePlace = lecturePlace;
+        this.lectureDate = lectureDate;
     }
 
-    public void setLecture_id(int lecture_id) {
-        this.lecture_id = lecture_id;
+    public int getLectureId() {
+        return lectureId;
     }
 
-    public String getLecture_topic() {
-        return lecture_topic;
+    public void setLectureId(int lectureId) {
+        this.lectureId = lectureId;
     }
 
-    public void setLecture_topic(String lecture_topic) {
-        this.lecture_topic = lecture_topic;
+    public String getLectureTopic() {
+        return lectureTopic;
     }
 
-    public String getLecture_place() {
-        return lecture_place;
+    public void setLectureTopic(String lectureTopic) {
+        this.lectureTopic = lectureTopic;
     }
 
-    public void setLecture_place(String lecture_place) {
-        this.lecture_place = lecture_place;
+    public String getLecturePlace() {
+        return lecturePlace;
     }
 
-    public Date getLecture_date() {
-        return lecture_date;
+    public void setLecturePlace(String lecturePlace) {
+        this.lecturePlace = lecturePlace;
     }
 
-    public void setLecture_date(Date lecture_date) {
-        this.lecture_date = lecture_date;
+    public Date getLectureDate() {
+        return lectureDate;
+    }
+
+    public void setLectureDate(Date lectureDate) {
+        this.lectureDate = lectureDate;
     }
 
     public Set<User> getUsers() {
