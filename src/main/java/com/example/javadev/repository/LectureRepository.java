@@ -19,6 +19,9 @@ public interface LectureRepository extends JpaRepository<Lecture, Integer> {
     @Query(nativeQuery = true, value="SELECT s.lecture_id FROM lecture s")
     List<Integer> getAllLecturesId();
 
+    @Query(nativeQuery = true, value="SELECT s.user_id FROM user_lecture s WHERE s.lecture_id = :lecture_id")
+    List<Integer> findAllStudentsIdsWhoAttendedLecture(@Param("lecture_id") int lectureId);
+
 }
 
 

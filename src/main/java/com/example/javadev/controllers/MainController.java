@@ -89,15 +89,17 @@ public class MainController {
         return new ModelAndView("redirect:/home/mylectures");
     }
 
-//    @RequestMapping(value = "/attendancelist", method = RequestMethod.GET)
-//    public String getAttendanceList(Model model, HttpServletRequest request) {
-//        model.addAttribute("lectures", lectureRepository.findAll());
-//        model.addAttribute("user", request.getRemoteUser());
-//        model.addAttribute("attendancelist", service.createAttendanceList());
-//        //model.addAttribute("numberoflecturesattended", service.createAttendanceList());
-//
-//        return "attendance_list";
-//    }
+    @RequestMapping(value = "/attendancelist", method = RequestMethod.GET)
+    public String getAttendanceList(Model model, HttpServletRequest request) {
+        model.addAttribute("lectures", service.createListOfLecturesSortedByDate());
+        model.addAttribute("numberoflectures", lectureRepository.count());
+        model.addAttribute("user", request.getRemoteUser());
+        model.addAttribute("attendancelist", service.createAttendanceList());
+        model.addAttribute("listnumberofstudentspresentonlecture", service.createListNumberOfStudentsPresentOnLecture());
+        model.addAttribute("numberofstudents", userRepository.findOnlyStudentIds().size());
+
+        return "attendance_list";
+    }
 
     @RequestMapping(value = "/studentslist", method = RequestMethod.GET)
     public String getStudentsList(Model model, HttpServletRequest request) {

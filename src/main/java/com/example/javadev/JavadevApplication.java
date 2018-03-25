@@ -4,6 +4,7 @@ import com.example.javadev.model.Lecture;
 import com.example.javadev.model.User;
 import com.example.javadev.repository.LectureRepository;
 import com.example.javadev.repository.UserRepository;
+import com.example.javadev.service.Service;
 import com.fasterxml.jackson.databind.util.TypeKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,6 +33,15 @@ public class JavadevApplication implements CommandLineRunner {
     @Autowired
     LectureRepository lectureRepository;
 
+    @Autowired
+    Service service;
+
+    @Value("${student.present}")
+    private String studentPresent;
+
+    @Value("${student.absent}")
+    private String studentAbsent;
+
     @Value("${spring.thymeleaf.templates_root:}")
     private String templatesRoot;
 
@@ -51,17 +61,30 @@ public class JavadevApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-
-
-//        TreeMap<String, String> studentsList = new TreeMap<>();
+//        HashMap<User, ArrayList<String>> attendanceList = new HashMap<>();
 //
-//        List<Integer> listOfStudentsIds = userRepository.findOnlyStudentIds();
+//        List<Integer> listOfStudentIds = userRepository.findOnlyStudentIds();
+//        List<Integer> listOfLecturesId = service.createListOfLecturesIdSortedByDate();
 //
-//        for (int UserId : listOfStudentsIds) {
-//            User user = userRepository.findUserByUserId(UserId);
-//            String name = user.getFirstName() + " " + user.getLastName();
-//            String email = user.getEmail();
-//            studentsList.put(email, name);
+//        for (int studentId : listOfStudentIds) {
+//            //za kazdym razem robie nową liste, bo póżniej Map prawdopodobnie? potrzebuje cały czas referencje do tej listy
+//            User student = new User();
+//            student = userRepository.findByUserId(studentId);
+//            student.setNumberOfLecturesAttended(lectureRepository.findAllLectureIdsAttendedByStudent(studentId).size());
+//            ArrayList<Integer> innerList = new ArrayList<>();
+//            ArrayList<String> listOfAttendance = new ArrayList<>();
+//            listOfAttendance.clear();
+//            innerList.clear();
+//
+//            innerList.addAll(lectureRepository.findAllLectureIdsAttendedByStudent(studentId));
+//            for (int lectureId : listOfLecturesId) {
+//                if (innerList.contains(lectureId))
+//                    listOfAttendance.add(studentPresent);
+//                else
+//                    listOfAttendance.add(studentAbsent);
+//            }
+//
+//            attendanceList.put(student, listOfAttendance);
 //        }
-    }
+   }
 }

@@ -65,8 +65,8 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="student : ${students}">
-            <td th:text="${student.value}">Dane studenta</td>
+        <tr th:each="student, iterStat : ${students}">
+            <td th:text="${iterStat.count}+'. '+${student.value}">Dane studenta</td>
             <td th:text="${student.key}">Kontakt</td>
             <td>
                 <button id="delete_button">Usuń</button>

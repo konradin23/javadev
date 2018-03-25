@@ -175,3 +175,6 @@ h4 {
 .text-size-12{
     font-size: 12px;
 }
+.name-column{
+    width: 200px;
+}

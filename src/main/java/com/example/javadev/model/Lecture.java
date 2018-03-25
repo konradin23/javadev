@@ -9,7 +9,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "lecture")
-public class Lecture {
+public class Lecture{
 
     @Id
     @Column(name = "lecture_id")
@@ -79,4 +79,7 @@ public class Lecture {
     public void setUsers(Set<User> users) {
         this.users = users;
     }
+
+
+
 }

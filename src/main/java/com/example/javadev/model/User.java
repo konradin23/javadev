@@ -9,7 +9,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "user")
-public class User {
+public class User implements Comparable {
     @Id
     @Column(name = "user_id")
     private int userId;
@@ -26,6 +26,9 @@ public class User {
 
     @Column(name = "lastname")
     private String lastName;
+
+    @Transient
+    private int numberOfLecturesAttended;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -82,6 +85,14 @@ public class User {
         this.password = password;
     }
 
+    public int getNumberOfLecturesAttended() {
+        return numberOfLecturesAttended;
+    }
+
+    public void setNumberOfLecturesAttended(int numberOfLecturesAttended) {
+        this.numberOfLecturesAttended = numberOfLecturesAttended;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -112,5 +123,10 @@ public class User {
 
     public void setLectures(Set<Lecture> lectures) {
         this.lectures = lectures;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return 0;
     }
 }
