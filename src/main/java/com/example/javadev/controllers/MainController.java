@@ -50,6 +50,7 @@ public class MainController {
     @RequestMapping(value = "/addlectures", method = RequestMethod.GET)
     public String getAddLectures(Model model, HttpServletRequest request) {
         model.addAttribute("user", request.getRemoteUser());
+        model.addAttribute("isadiingnewlecturespossible", service.isNumberOfLecturesMoreThan8());
         return "add_lectures";
     }
 
@@ -58,8 +59,21 @@ public class MainController {
             @RequestParam("lecture_topic") String lecture_topic,
             @RequestParam("lecture_place") String lecture_place,
             @RequestParam("lecture_date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date lecture_date) {
-        lectureRepository.save(new Lecture(lecture_topic, lecture_place, lecture_date));
-        return new ModelAndView("redirect:/home/page");
+
+//        ModelAndView modelAndView = new ModelAndView();
+//        int numberOfLectures = lectureRepository.findAll().size();
+//        if (numberOfLectures >= 8) {
+//            bindingResult
+//                    .rejectValue("email", "error.user",
+//                            "There is already a user registered with the email provided");
+//        }
+//        if (bindingResult.hasErrors()) {
+//            modelAndView.setViewName("addlectures");
+//        } else {
+//            lectureRepository.save(new Lecture(lecture_topic, lecture_place, lecture_date));
+//        }
+
+        return new ModelAndView("redirect:/home/addlectures");
     }
 
     @RequestMapping(value = "/mylectures", method = RequestMethod.GET)

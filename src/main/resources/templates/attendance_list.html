@@ -47,12 +47,12 @@
     </h3>
 
     <div>
-        <input id="myInput" class="form-control"  placeholder="Szukaj..."/>
+        <input id="myInput" class="form-control" placeholder="Szukaj..."/>
     </div>
     <br/>
 
 
-    <table style="width: 75%" id="myTable" class="table table-hover text-size-12 ">
+    <table style="width: 75%" id="myTable" class="table table-hover text-size-12">
         <thead>
         <tr>
             <th style="width: 50%;" class="font-weight-normal">Imię i nazwisko</th>
@@ -64,7 +64,8 @@
 
         <tbody>
         <tr th:each="element, iterStat : ${attendancelist}">
-            <td th:text="${iterStat.count}+'. '+${element.key.getFirstName()}+' '+${element.key.getLastName()}+'('+${element.key.getNumberOfLecturesAttended()}+'/' + ${numberoflectures}+')'">Imie i nazwisko</td>
+            <td class="font-weight-bold" th:text="${iterStat.count}+'. '+${element.key.getFirstName()}+' '+${element.key.getLastName()}
+            +' ('+${element.key.getNumberOfLecturesAttended()}+'/' + ${numberoflectures}+')'">Imie i nazwisko</td>
 
             <th:block th:each="was : ${element.value}">
                 <th><img th:src="${was}" width="25" height="25" class="table-img-center"/></th>

@@ -50,7 +50,8 @@
     </h3>
 
     <div id="form">
-        <form method="post" action="/home/addlectures">
+        <form method="post" action="/home/addlectures" th:object="${user}">
+
             <div class="form-group row">
                 <label>Temat zajęć</label>
                 <input type="text" maxlength="150" name="lecture_topic" class="form-control"/>
@@ -63,13 +64,19 @@
 
             <div class="form-group row">
                 <label>Data</label>
-                <input type="date" name="lecture_date" class="form-control"/>
+                <input type="date" name="lecture_date" class="form-control input-type-date"/>
             </div>
 
+            <p th:if="${isadiingnewlecturespossible}">
+            <div class="alert alert-danger text-center" role="alert">Nie można dodać kolejnych zajęć, osiągnięto ich maksymalną ilość (8)</div>
+            </p>
+
+            <p th:unless="${isadiingnewlecturespossible}">
             <div class="text-center">
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                 <button type="submit" class="add_button">Prześlij dane</button>
             </div>
+            </p>
 
         </form>
     </div>

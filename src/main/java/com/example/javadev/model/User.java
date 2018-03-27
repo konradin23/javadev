@@ -9,7 +9,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "user")
-public class User implements Comparable {
+public class User implements Comparable<User> {
     @Id
     @Column(name = "user_id")
     private int userId;
@@ -125,8 +125,16 @@ public class User implements Comparable {
         this.lectures = lectures;
     }
 
+
     @Override
-    public int compareTo(Object o) {
-        return 0;
+    public int compareTo(User o) {
+        int compareLastName = lastName.compareTo(o.lastName);
+
+        if(compareLastName == 0) {
+            return firstName.compareTo(o.firstName);
+        }
+        else {
+            return compareLastName;
+        }
     }
 }

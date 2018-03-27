@@ -29,9 +29,9 @@ public class ServiceImpl implements com.example.javadev.service.Service {
     private String studentAbsent;
 
     @Override
-    public HashMap<User, ArrayList<String>> createAttendanceList() {
+    public TreeMap<User, ArrayList<String>> createAttendanceList() {
 
-        HashMap<User, ArrayList<String>> attendanceList = new HashMap<>();
+        TreeMap<User, ArrayList<String>> attendanceList = new TreeMap<>();
 
         List<Integer> listOfStudentIds = userRepository.findOnlyStudentIds();
         List<Integer> listOfLecturesId = createListOfLecturesIdSortedByDate();
@@ -134,6 +134,13 @@ public class ServiceImpl implements com.example.javadev.service.Service {
             listOfLecturesIdSortedByDate.add(lecture.getLectureId());
         }
         return listOfLecturesIdSortedByDate;
+    }
+
+    @Override
+    public boolean isNumberOfLecturesMoreThan8(){
+        if(lectureRepository.count()>=8)
+            return true;
+        return false;
     }
 
 }

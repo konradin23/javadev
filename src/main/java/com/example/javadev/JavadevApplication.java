@@ -20,6 +20,7 @@ import org.thymeleaf.templateresolver.ITemplateResolver;
 import javax.transaction.Transactional;
 import java.lang.reflect.Array;
 import java.util.*;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 @SpringBootApplication
 public class JavadevApplication implements CommandLineRunner {
@@ -62,6 +63,7 @@ public class JavadevApplication implements CommandLineRunner {
     @Override
     public void run(String... args) {
 //        HashMap<User, ArrayList<String>> attendanceList = new HashMap<>();
+//        TreeMap<User, ArrayList<String>> sortedAttendanceList = new TreeMap<>();
 //
 //        List<Integer> listOfStudentIds = userRepository.findOnlyStudentIds();
 //        List<Integer> listOfLecturesId = service.createListOfLecturesIdSortedByDate();
@@ -86,5 +88,6 @@ public class JavadevApplication implements CommandLineRunner {
 //
 //            attendanceList.put(student, listOfAttendance);
 //        }
-   }
+
+    }
 }

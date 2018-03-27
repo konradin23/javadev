@@ -178,3 +178,9 @@ h4 {
 .name-column{
     width: 200px;
 }
+
+.input-type-date{
+    width:250px;
+    margin-left: 20px;
+    height: 25px;
+}
