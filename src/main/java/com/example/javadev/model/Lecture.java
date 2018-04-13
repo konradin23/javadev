@@ -30,9 +30,7 @@ public class Lecture{
     private Set<User> users = new HashSet<>();
 
     public Lecture() {
-    }
-
-    ;
+    };
 
     public Lecture(String lectureTopic, String lecturePlace, Date lectureDate) {
         this.lectureTopic = lectureTopic;

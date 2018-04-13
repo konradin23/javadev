@@ -66,10 +66,14 @@
         </thead>
         <tbody>
         <tr th:each="student, iterStat : ${students}">
-            <td th:text="${iterStat.count}+'. '+${student.value}">Dane studenta</td>
-            <td th:text="${student.key}">Kontakt</td>
+            <td th:text="${iterStat.count}+'. '+${student.firstName}+' '+${student.lastName}">Dane studenta</td>
+            <td th:text="${student.email}">Kontakt</td>
             <td>
-                <button id="delete_button">Usuń</button>
+                <form method="post" th:action="@{/home/students/{id}(id=${student.userId})}">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                    <input type="hidden" id="id" name="id" th:value="${student.userId}"/>
+                    <button id="delete_button">Usuń</button>
+                </form>
             </td>
             <td>
                 <button id="edit_button">Edytuj</button>

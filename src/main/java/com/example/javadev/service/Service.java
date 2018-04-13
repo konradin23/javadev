@@ -9,7 +9,7 @@ import java.util.Map;
 
 public interface Service {
     Map<User, ArrayList<String>> createAttendanceList();
-    Map<String, String> createStudentsList();
+    List<User> createStudentsList();
     int getNumberOfStudents();
     int getNumberOfLecturesAttendedByStudent(int userId);
     int getNumberOfAllLectures();

@@ -4,6 +4,7 @@ import com.example.javadev.LectureComparator;
 import com.example.javadev.model.Lecture;
 import com.example.javadev.model.User;
 import com.example.javadev.repository.LectureRepository;
+import com.example.javadev.repository.RoleRepository;
 import com.example.javadev.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,6 +22,9 @@ public class ServiceImpl implements com.example.javadev.service.Service {
 
     @Autowired
     private LectureRepository lectureRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Value("${student.present}")
     private String studentPresent;
@@ -60,19 +64,15 @@ public class ServiceImpl implements com.example.javadev.service.Service {
     }
 
     @Override
-    public TreeMap<String, String> createStudentsList() {
+    public List<User> createStudentsList() {
 
-        TreeMap<String, String> studentsList = new TreeMap<>();
-
+        List<User> studentsList = new ArrayList<>();
         List<Integer> listOfStudentsIds = userRepository.findOnlyStudentIds();
 
         for (int UserId : listOfStudentsIds) {
             User user = userRepository.findUserByUserId(UserId);
-            String name = user.getFirstName() + " " + user.getLastName();
-            String email = user.getEmail();
-            studentsList.put(email, name);
+            studentsList.add(user);
         }
-
         return studentsList;
     }
 
@@ -142,6 +142,11 @@ public class ServiceImpl implements com.example.javadev.service.Service {
             return true;
         return false;
     }
+
+//    public void deleteUser(int id){
+//
+//        userRepository.deleteAllByUserId(id);
+//    }
 
 }
 

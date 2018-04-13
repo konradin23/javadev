@@ -12,9 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,47 +34,33 @@ public class MainController {
     private UserService userService;
 
 
-    @RequestMapping(value = "/mylogin", method = RequestMethod.GET)
+    @GetMapping(value = "/mylogin")
     public String getLoginPage(Model model) {
         return "loginpage";
     }
 
-    @RequestMapping(value = "/page", method = RequestMethod.GET)
+    @GetMapping(value = "/page")
     public String page(Model model, HttpServletRequest request) {
         model.addAttribute("user", request.getRemoteUser());
         return "page";
     }
 
-    @RequestMapping(value = "/addlectures", method = RequestMethod.GET)
+    @GetMapping(value = "/addlectures")
     public String getAddLectures(Model model, HttpServletRequest request) {
         model.addAttribute("user", request.getRemoteUser());
         model.addAttribute("isadiingnewlecturespossible", service.isNumberOfLecturesMoreThan8());
         return "add_lectures";
     }
 
-    @RequestMapping(value = "/addlectures", method = RequestMethod.POST)
+    @PostMapping(value = "/addlectures")
     public ModelAndView createLecture(
             @RequestParam("lecture_topic") String lecture_topic,
             @RequestParam("lecture_place") String lecture_place,
             @RequestParam("lecture_date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date lecture_date) {
-
-//        ModelAndView modelAndView = new ModelAndView();
-//        int numberOfLectures = lectureRepository.findAll().size();
-//        if (numberOfLectures >= 8) {
-//            bindingResult
-//                    .rejectValue("email", "error.user",
-//                            "There is already a user registered with the email provided");
-//        }
-//        if (bindingResult.hasErrors()) {
-//            modelAndView.setViewName("addlectures");
-//        } else {
-//            lectureRepository.save(new Lecture(lecture_topic, lecture_place, lecture_date));
-//        }
-
         return new ModelAndView("redirect:/home/addlectures");
     }
 
-    @RequestMapping(value = "/mylectures", method = RequestMethod.GET)
+    @GetMapping(value = "/mylectures")
     public String getMyLectures(Model model, HttpServletRequest request) {
         model.addAttribute("lectures", lectureRepository.findAll());
         model.addAttribute("user", request.getRemoteUser());
@@ -87,7 +71,7 @@ public class MainController {
         return "my_lectures";
     }
 
-    @RequestMapping(value = "/lectureattended", method = RequestMethod.POST)
+    @PostMapping(value = "/lectureattended")
     @Transactional
     public ModelAndView lectureAttended(@RequestParam("user_id") int user_id,
                                         @RequestParam("lecture_id") int lecture_id) {
@@ -103,7 +87,7 @@ public class MainController {
         return new ModelAndView("redirect:/home/mylectures");
     }
 
-    @RequestMapping(value = "/attendancelist", method = RequestMethod.GET)
+    @GetMapping(value = "/attendancelist")
     public String getAttendanceList(Model model, HttpServletRequest request) {
         model.addAttribute("lectures", service.createListOfLecturesSortedByDate());
         model.addAttribute("numberoflectures", lectureRepository.count());
@@ -115,12 +99,19 @@ public class MainController {
         return "attendance_list";
     }
 
-    @RequestMapping(value = "/studentslist", method = RequestMethod.GET)
+    @GetMapping(value = "/studentslist")
     public String getStudentsList(Model model, HttpServletRequest request) {
         model.addAttribute("students", service.createStudentsList());
         model.addAttribute("user", request.getRemoteUser());
         model.addAttribute("numberOfStudents", service.getNumberOfStudents());
         return "students_list";
+    }
+
+
+    @PostMapping(value = "/students/{id}")
+    public String deleteStudent (@PathVariable int id){
+        userRepository.deleteUserByUserId(id);
+        return "redirect:/home/studentslist";
     }
 
 //

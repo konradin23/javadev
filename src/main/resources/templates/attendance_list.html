@@ -64,8 +64,8 @@
 
         <tbody>
         <tr th:each="element, iterStat : ${attendancelist}">
-            <td class="font-weight-bold" th:text="${iterStat.count}+'. '+${element.key.getFirstName()}+' '+${element.key.getLastName()}
-            +' ('+${element.key.getNumberOfLecturesAttended()}+'/' + ${numberoflectures}+')'">Imie i nazwisko</td>
+            <td><strong th:text="${iterStat.count}+'. '+${element.key.getFirstName()}+' '+${element.key.getLastName()}"></strong>
+            <span class="font-color-gray" th:text="' ('+${element.key.getNumberOfLecturesAttended()}+'/' + ${numberoflectures}+')'"></span></td>
 
             <th:block th:each="was : ${element.value}">
                 <th><img th:src="${was}" width="25" height="25" class="table-img-center"/></th>
