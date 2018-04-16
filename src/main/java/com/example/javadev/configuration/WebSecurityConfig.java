@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
 import javax.sql.DataSource;
@@ -22,9 +23,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Qualifier("dataSource")
     @Autowired
     DataSource dataSource;
-//
-//    @Autowired
-//    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Value("${spring.queries.users-query}")
     private String usersQuery;
@@ -35,12 +33,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth)
             throws Exception {
+
+        PasswordEncoder encoder = new BCryptPasswordEncoder();
+
         auth.
                 jdbcAuthentication()
                 .usersByUsernameQuery(usersQuery)
                 .authoritiesByUsernameQuery(rolesQuery)
-                .dataSource(dataSource);
-//                .passwordEncoder(bCryptPasswordEncoder);
+                .dataSource(dataSource)
+                .passwordEncoder(encoder);
     }
 
     @Override
