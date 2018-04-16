@@ -19,8 +19,13 @@
         <form class="form-signin" method="post" action="/home/mylogin">
             <h1 class="h3 mb-3 font-weight-normal">Logowanie</h1>
             <h3 class="h5 mb-5 font-weight-normal">Wprowadź swoje dane poniżej</h3>
+
             <p th:if="${param.error}">
             <div class="alert alert-danger" role="alert">Złe dane logowania</div>
+            </p>
+
+            <p th:if="${param.logout}">
+            <div class="alert alert-danger" role="alert">Wylogowano</div>
             </p>
 
             <p class="text-left text-uppercase font-weight-bold">E-mail</p>
