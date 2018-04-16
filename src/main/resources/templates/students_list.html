@@ -39,7 +39,7 @@
                         <span th:text="${user}"></span>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="#">Wyloguj się</a>
+                        <a class="dropdown-item" href="/home/logout">Wyloguj się</a>
                     </div>
                 </li>
             </ul>
@@ -72,12 +72,17 @@
                 <form method="post" th:action="@{/home/students/{id}(id=${student.userId})}">
                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                     <input type="hidden" id="id" name="id" th:value="${student.userId}"/>
-                    <button id="delete_button">Usuń</button>
+                    <button type="submit" class="action_button">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
                 </form>
             </td>
-            <td>
-                <button id="edit_button">Edytuj</button>
-            </td>
+            <td><a th:href="@{'/home/students/{id}'(id=${student.userId})}">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <button class="action_button">
+                    <i class="fas fa-edit"></i>
+                </button>
+            </a></td>
         </tr>
         </tbody>
     </table>

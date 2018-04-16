@@ -43,31 +43,34 @@ input[type=text] {
 .add_button {
     width: 280px;
     background-color: #59983b;
-    border-type: none;
     border-radius: 5px;
     color: white;
     height: 40px;
     margin: 0px 10px 10px 10px;
 }
 
-#delete_button {
-    width: 60px;
-    background-color: #983b59;
-    border-type: none;
+.update_button{
+    width: 280px;
+    background-color: #fd6f08;
     border-radius: 5px;
     color: white;
-    height: 22px;
-
+    height: 40px;
+    display: block;
+    margin: 0 auto;
 }
 
-#edit_button {
-    width: 60px;
-    background-color: #3b5998;
+.action_button {
+    width: 30px;
     border-type: none;
-    border-radius: 5px;
-    color: white;
-    height: 22px;
+    background: transparent;
+    border:none;
+    font-size: 17px;
+    color: #fd6f08;
+    cursor: pointer;
+}
 
+.action_button:hover{
+    color: #cb5d08;
 }
 
 h4 {
@@ -116,7 +119,8 @@ h4 {
 .font-weight-bold {
     font-weight: bold;
 }
-.font-weight-normal{
+
+.font-weight-normal {
     font-weight: normal;
 }
 
@@ -142,13 +146,13 @@ h4 {
     padding: 10px;
 }
 
-#myTable{
+#myTable {
     width: 600px;
     margin-left: auto;
     margin-right: auto;
 }
 
-.nav-border-bottom{
+.nav-border-bottom {
     border-bottom: #eeeeee;
     border-bottom-style: solid;
     border-bottom-width: 4px;
@@ -161,30 +165,37 @@ h4 {
     font-family: "FontAwesome"
 }
 
-.bg-eee{
+.bg-eee {
     background-color: #eee;
 }
 
-#my-lectures-table{
+#my-lectures-table {
     overflow-y: scroll;
-    max-height:400px;
+    max-height: 400px;
     margin-left: auto;
     margin-right: auto;
 }
 
-.text-size-12{
+.text-size-12 {
     font-size: 12px;
 }
-.name-column{
+
+.name-column {
     width: 200px;
 }
 
-.input-type-date{
-    width:250px;
+.input-type-date {
+    width: 250px;
     margin-left: 20px;
     height: 25px;
 }
 
-.font-color-gray{
+.font-color-gray {
     color: gray;
+}
+
+#update_student_table{
+    margin-left: auto;
+    margin-right: auto;
+    text-align: right;
 }

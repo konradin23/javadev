@@ -1,6 +1,7 @@
 package com.example.javadev.configuration;
 
 
+import com.example.javadev.CustomAccessDeniedHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
 
 import javax.sql.DataSource;
 
@@ -47,13 +49,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests().mvcMatchers("/home/page").permitAll()
                 .antMatchers("/css/**", "/js/**", "/img/**", "/fonts/**").permitAll()
-                .antMatchers("/home/registration").permitAll()
+                .antMatchers("/home/mylectures").access("hasRole('ROLE_USER')")
+                .antMatchers("/home/studentslist", "/home/addlectures", "/home/attendancelist", "/home/students/**").access("hasRole('ROLE_ADMIN')")
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/home/mylogin").permitAll().defaultSuccessUrl("/home/mylectures")
+                .formLogin().loginPage("/home/mylogin").permitAll().defaultSuccessUrl("/home/default")
+                .and()
+                .exceptionHandling().accessDeniedHandler(accessDeniedHandler())
                 .and()
                 .httpBasic();
     }
 
-
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler(){
+        return new CustomAccessDeniedHandler();
+    }
 }

@@ -9,6 +9,9 @@ import com.example.javadev.repository.UserRepository;
 import com.example.javadev.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.Date;
@@ -43,6 +47,20 @@ public class MainController {
     public String page(Model model, HttpServletRequest request) {
         model.addAttribute("user", request.getRemoteUser());
         return "page";
+    }
+
+    @GetMapping("/default")
+    public String defaultAfterLogin(HttpServletRequest request) {
+        if (request.isUserInRole("ADMIN")) {
+            return "redirect:/home/attendancelist";
+        }
+        return "redirect:/home/mylectures";
+    }
+
+    @GetMapping("/accessdenied")
+    public String accessDeniedPage(HttpServletRequest request, Model model) {
+            model.addAttribute("user", request.getRemoteUser());
+            return "access_denied";
     }
 
     @GetMapping(value = "/addlectures")
@@ -109,9 +127,40 @@ public class MainController {
 
 
     @PostMapping(value = "/students/{id}")
-    public String deleteStudent (@PathVariable int id){
+    public String deleteStudent(@PathVariable int id) {
         userRepository.deleteUserByUserId(id);
         return "redirect:/home/studentslist";
+    }
+
+
+    @GetMapping(value = "/students/{id}")
+    public String getEditStudentPage(@PathVariable int id, Model model, HttpServletRequest request) {
+        User student = userRepository.findUserByUserId(id);
+        model.addAttribute("student", student);
+        model.addAttribute("user", request.getRemoteUser());
+        return "edit_user";
+    }
+
+    @PostMapping(value = "/students/edit/{id}")
+    public String editUser(@PathVariable("id") int id,
+                           @RequestParam("firstName") String firstName,
+                           @RequestParam("lastName") String lastName,
+                           @RequestParam("email") String email) {
+        User user = userRepository.findUserByUserId(id);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setEmail(email);
+        userRepository.save(user);
+        return "redirect:/home/studentslist";
+    }
+
+    @RequestMapping(value="/logout", method = RequestMethod.GET)
+    public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null){
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+        }
+        return "redirect:/home/mylogin";
     }
 
 }
