@@ -49,7 +49,7 @@ public class MainController {
         return "page";
     }
 
-    @GetMapping("/default")
+    @GetMapping(value="/default")
     public String defaultAfterLogin(HttpServletRequest request) {
         if (request.isUserInRole("ADMIN")) {
             return "redirect:/home/attendancelist";
@@ -57,10 +57,10 @@ public class MainController {
         return "redirect:/home/mylectures";
     }
 
-    @GetMapping("/accessdenied")
+    @GetMapping(value="/accessdenied")
     public String accessDeniedPage(HttpServletRequest request, Model model) {
-            model.addAttribute("user", request.getRemoteUser());
-            return "access_denied";
+        model.addAttribute("user", request.getRemoteUser());
+        return "access_denied";
     }
 
     @GetMapping(value = "/addlectures")
@@ -154,13 +154,13 @@ public class MainController {
         return "redirect:/home/studentslist";
     }
 
-    @RequestMapping(value="/logout", method = RequestMethod.GET)
-    public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null){
+        if (auth != null) {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
-        return "redirect:/home/mylogin";
+        return "redirect:/home/mylogin?logout";
     }
 
 }
