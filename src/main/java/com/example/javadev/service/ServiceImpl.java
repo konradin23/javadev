@@ -1,8 +1,10 @@
 package com.example.javadev.service;
 
 import com.example.javadev.LectureComparator;
+import com.example.javadev.model.Attendance;
 import com.example.javadev.model.Lecture;
 import com.example.javadev.model.User;
+import com.example.javadev.repository.AttendanceRepository;
 import com.example.javadev.repository.LectureRepository;
 import com.example.javadev.repository.RoleRepository;
 import com.example.javadev.repository.UserRepository;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.*;
 
 @PropertySource("classpath:application.properties")
@@ -22,6 +25,9 @@ public class ServiceImpl implements com.example.javadev.service.Service {
 
     @Autowired
     private LectureRepository lectureRepository;
+
+    @Autowired
+    private AttendanceRepository attendanceRepository;
 
     @Autowired
     private RoleRepository roleRepository;
@@ -130,23 +136,29 @@ public class ServiceImpl implements com.example.javadev.service.Service {
     public List<Integer> createListOfLecturesIdSortedByDate() {
         List<Lecture> listOfLectures = createListOfLecturesSortedByDate();
         List<Integer> listOfLecturesIdSortedByDate = new ArrayList<>();
-        for (Lecture lecture:listOfLectures) {
+        for (Lecture lecture : listOfLectures) {
             listOfLecturesIdSortedByDate.add(lecture.getLectureId());
         }
         return listOfLecturesIdSortedByDate;
     }
 
     @Override
-    public boolean isNumberOfLecturesMoreThan8(){
-        if(lectureRepository.count()>=8)
+    public boolean isNumberOfLecturesMoreThan8() {
+        if (lectureRepository.count() >= 8)
             return true;
         return false;
     }
 
-//    public void deleteUser(int id){
-//
-//        userRepository.deleteAllByUserId(id);
-//    }
+    @Override
+    public List<Integer> createListOfLectureAttendanceByStudent(int userId) {
+
+        List<Attendance> listOfAttendanceByStudent = attendanceRepository.findAllAttendanceByStudent(userId);
+        List<Integer> listOfLectureAttendanceByStudent = new ArrayList<>();
+        for (Attendance attendance:listOfAttendanceByStudent) {
+            listOfLectureAttendanceByStudent.add(attendance.getAttendanceStatus());
+        }
+        return listOfLectureAttendanceByStudent;
+    }
 
 }
 

@@ -26,8 +26,8 @@ public class Lecture{
     @Column(name = "lecture_date")
     private Date lectureDate;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "lectures")
-    private Set<User> users = new HashSet<>();
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "lecture", cascade=CascadeType.ALL)
+    private Set<Attendance> attendance;
 
     public Lecture() {
     };
@@ -70,14 +70,11 @@ public class Lecture{
         this.lectureDate = lectureDate;
     }
 
-    public Set<User> getUsers() {
-        return users;
+    public Set<Attendance> getAttendance() {
+        return attendance;
     }
 
-    public void setUsers(Set<User> users) {
-        this.users = users;
+    public void setAttendance(Set<Attendance> attendance) {
+        this.attendance = attendance;
     }
-
-
-
 }

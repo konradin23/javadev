@@ -19,4 +19,5 @@ public interface Service {
     List<Lecture> createListOfLecturesSortedByDate();
     List<Integer> createListOfLecturesIdSortedByDate();
     boolean isNumberOfLecturesMoreThan8();
+    List<Integer> createListOfLectureAttendanceByStudent(int userId);
 }

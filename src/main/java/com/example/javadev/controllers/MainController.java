@@ -1,11 +1,12 @@
 package com.example.javadev.controllers;
 
+import com.example.javadev.model.Attendance;
 import com.example.javadev.model.Lecture;
 import com.example.javadev.model.User;
+import com.example.javadev.repository.AttendanceRepository;
 import com.example.javadev.repository.LectureRepository;
-import com.example.javadev.service.Service;
-import com.example.javadev.service.ServiceImpl;
 import com.example.javadev.repository.UserRepository;
+import com.example.javadev.service.Service;
 import com.example.javadev.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -14,15 +15,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
-import javax.validation.Valid;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Controller
 @RequestMapping(path = "/home")
@@ -33,23 +34,19 @@ public class MainController {
     @Autowired
     private UserRepository userRepository;
     @Autowired
+    private AttendanceRepository attendanceRepository;
+    @Autowired
     private Service service;
     @Autowired
     private UserService userService;
 
 
     @GetMapping(value = "/mylogin")
-    public String getLoginPage(Model model) {
+    public String getLoginPage() {
         return "loginpage";
     }
 
-    @GetMapping(value = "/page")
-    public String page(Model model, HttpServletRequest request) {
-        model.addAttribute("user", request.getRemoteUser());
-        return "page";
-    }
-
-    @GetMapping(value="/default")
+    @GetMapping(value = "/default")
     public String defaultAfterLogin(HttpServletRequest request) {
         if (request.isUserInRole("ADMIN")) {
             return "redirect:/home/attendancelist";
@@ -57,7 +54,7 @@ public class MainController {
         return "redirect:/home/mylectures";
     }
 
-    @GetMapping(value="/accessdenied")
+    @GetMapping(value = "/accessdenied")
     public String accessDeniedPage(HttpServletRequest request, Model model) {
         model.addAttribute("user", request.getRemoteUser());
         return "access_denied";
@@ -86,6 +83,7 @@ public class MainController {
         model.addAttribute("numberOfLecturesAttendedByStudent",
                 service.getNumberOfLecturesAttendedByStudent(userRepository.findStudentsIdByEmail(request.getRemoteUser())));
         model.addAttribute("numberOfAllLectures", service.getNumberOfAllLectures());
+        model.addAttribute("listOfLecturesAttendanceByStudent",service.createListOfLectureAttendanceByStudent(userRepository.findStudentsIdByEmail(request.getRemoteUser())));
         return "my_lectures";
     }
 
@@ -94,13 +92,29 @@ public class MainController {
     public ModelAndView lectureAttended(@RequestParam("user_id") int user_id,
                                         @RequestParam("lecture_id") int lecture_id) {
 
-        User user = userRepository.findByUserId(user_id);
-        Lecture lecture = lectureRepository.findOne(lecture_id);
+        Attendance a = attendanceRepository.findAttendanceByUserIdAndLectureId(user_id,lecture_id);
+        a.setAttendanceStatus(1);
 
-        user.getLectures().add(lecture);
-        lecture.getUsers().add(user);
 
-        userRepository.save(user);
+//        Set attendanceUser = new HashSet<Attendance>() {{
+//            add(new Attendance(user, lecture, 1));
+//        }};
+//        user.setAttendance(attendanceUser);
+//
+//        userRepository.save(new HashSet<User>() {{
+//            add(user);
+//        }});
+
+        return new ModelAndView("redirect:/home/mylectures");
+    }
+
+    @PostMapping(value = "/lecturenotattended")
+    @Transactional
+    public ModelAndView lectureNotAttended(@RequestParam("user_id") int user_id,
+                                        @RequestParam("lecture_id") int lecture_id) {
+
+        Attendance a = attendanceRepository.findAttendanceByUserIdAndLectureId(user_id,lecture_id);
+        a.setAttendanceStatus(2);
 
         return new ModelAndView("redirect:/home/mylectures");
     }
@@ -154,7 +168,7 @@ public class MainController {
         return "redirect:/home/studentslist";
     }
 
-    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    @GetMapping(value = "/logout")
     public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null) {

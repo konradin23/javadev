@@ -36,21 +36,8 @@ public class User implements Comparable<User> {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "user_lecture",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "lecture_id")})
-    private Set<Lecture> lectures = new HashSet<>();
-
-    public void addLecture(Lecture lecture){
-        lectures.add(lecture);
-        lecture.getUsers().add(this);
-    }
-
-    public void removeLecture(Lecture lecture){
-        lectures.remove(lecture);
-        lecture.getUsers().remove(this);
-    }
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Attendance> attendance;
 
     public User() {
     };
@@ -119,14 +106,13 @@ public class User implements Comparable<User> {
         this.roles = roles;
     }
 
-    public Set<Lecture> getLectures() {
-        return lectures;
+    public Set<Attendance> getAttendance() {
+        return attendance;
     }
 
-    public void setLectures(Set<Lecture> lectures) {
-        this.lectures = lectures;
+    public void setAttendance(Set<Attendance> attendance) {
+        this.attendance = attendance;
     }
-
 
     @Override
     public int compareTo(User o) {
